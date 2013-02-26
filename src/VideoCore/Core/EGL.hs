@@ -41,32 +41,32 @@ noSurface      = intPtrToPtr 0 :: Surface
 dontCare = -1 :: CInt
 
 -- Errors / getError return values --
-success = 0x3000 :: CUInt
-notInitialized = 0x3001 :: CUInt
-badAccess = 0x3002 :: CUInt
-badAlloc = 0x3003 :: CUInt
-badAttribute = 0x3004 :: CUInt
-badConfig = 0x3005 :: CUInt
-badContext = 0x3006 :: CUInt
-badCurrentSurface = 0x3007 :: CUInt
-badDisplay = 0x3008 :: CUInt
-badMatch = 0x3009 :: CUInt
-badNativePixmap = 0x300A :: CUInt
-badNativeWindow = 0x300B :: CUInt
-badParameter = 0x300C :: CUInt
-badSurface = 0x300D :: CUInt
-contextLost = 0x300E :: CUInt -- EGL 1.1 - IMG_power_management
+success = 0x3000 :: EGLint
+notInitialized = 0x3001 :: EGLint
+badAccess = 0x3002 :: EGLint
+badAlloc = 0x3003 :: EGLint
+badAttribute = 0x3004 :: EGLint
+badConfig = 0x3005 :: EGLint
+badContext = 0x3006 :: EGLint
+badCurrentSurface = 0x3007 :: EGLint
+badDisplay = 0x3008 :: EGLint
+badMatch = 0x3009 :: EGLint
+badNativePixmap = 0x300A :: EGLint
+badNativeWindow = 0x300B :: EGLint
+badParameter = 0x300C :: EGLint
+badSurface = 0x300D :: EGLint
+contextLost = 0x300E :: EGLint -- EGL 1.1 - IMG_power_management
 
 -- Config attributes -- TODO Mostly Unimplemented
-bufferSize = 0x3020 :: CUInt
-alphaSize = 0x3021 :: CUInt
-blueSize = 0x3022 :: CUInt
-greenSize = 0x3023 :: CUInt
-redSize =  0x3024 :: CUInt
+bufferSize = 0x3020 :: EGLint
+alphaSize = 0x3021 :: EGLint
+blueSize = 0x3022 :: EGLint
+greenSize = 0x3023 :: EGLint
+redSize =  0x3024 :: EGLint
 --
-surfaceType = 0x3033
+surfaceType = 0x3033 :: EGLint
 --
-none = 0x3038 :: CUInt
+none = 0x3038 :: EGLint
 
 -- Config attribute values -- TODO
 
@@ -74,7 +74,7 @@ none = 0x3038 :: CUInt
 
 -- Config attribute mask bits -- TODO Mostly Unimplemented
 --
-windowBit = 0x0004 :: CUInt
+windowBit = 0x0004 :: EGLint
 
 -- QueryString targets -- TODO
 
@@ -88,7 +88,7 @@ windowBit = 0x0004 :: CUInt
 
 -- Constant scale factor by which fractional display resolutions &
 -- aspect ratio are scaled when queried as integer values.
-displayScaling = 10000 :: CUInt
+displayScaling = 10000 :: EGLint
 
 -- Unknown display resolution/aspect ratio --
 --unknown = -1 :: EGLint
@@ -101,7 +101,7 @@ unknown = -1 :: CInt
 -- QueryContext targets -- TODO
 
 -- QueryContext attributes --
-contextClientVersion = 0x3098 :: CUInt
+contextClientVersion = 0x3098 :: EGLint
 
 ----
 
@@ -114,3 +114,8 @@ foreign import ccall unsafe "eglInitialize"
 foreign import ccall unsafe "eglGetConfigs"
   getConfigs :: Display -> Ptr Config -> EGLint -> Ptr EGLint -> IO Boolean
 
+foreign import ccall unsafe "eglGetConfigAttrib"
+  getConfigAttrib :: Display -> Config -> EGLint -> Ptr EGLint -> IO Boolean
+
+foreign import ccall unsafe "eglChooseConfig"
+  chooseConfig :: Display -> Ptr EGLint -> Ptr Config -> EGLint -> Ptr EGLint -> IO Boolean
