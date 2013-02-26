@@ -16,7 +16,7 @@ build-type:          Simple
 cabal-version:       >=1.8
 
 library
-  exposed-modules:     VideoCore, VideoCore.EGL, VideoCore.EGL.Types, VideoCore.Interface.VMCSHost.Dispmanx, VideoCore.Interface.VMCSHost.Dispmanx.Types
+  exposed-modules:     VideoCore, VideoCore.EGL, VideoCore.Core, VideoCore.Core.EGL, VideoCore.Core.Interface.VMCSHost.Dispmanx, VideoCore.Core.Interface.VMCSHost.Dispmanx.Types
   include-dirs:        /opt/vc/include, /opt/vc/include/interface/vmcs_host/linux, /opt/vc/include/interface/vcos/pthreads
   extra-lib-dirs:      /opt/vc/lib
   extra-libraries:     bcm_host, EGL, GLESv2

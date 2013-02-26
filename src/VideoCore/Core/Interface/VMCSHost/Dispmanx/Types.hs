@@ -1,5 +1,5 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
-module VideoCore.Interface.VMCSHost.Dispmanx.Types where
+module VideoCore.Core.Interface.VMCSHost.Dispmanx.Types where
 
 import Foreign.C
 

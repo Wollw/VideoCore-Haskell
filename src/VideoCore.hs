@@ -1,7 +1,7 @@
-{-# LANGUAGE ForeignFunctionInterface #-}
 module VideoCore where
 
-import Foreign
---import Foreign.C
+import qualified VideoCore.Core as VC
+import qualified VideoCore.Core.EGL as EGL
 
-foreign import ccall unsafe "bcm_host_init" bcm_host_init :: IO ()
+initialize :: IO ()
+initialize = VC.bcm_host_init
