@@ -126,3 +126,6 @@ foreign import ccall unsafe "eglChooseConfig"
 
 foreign import ccall unsafe "eglBindAPI"
   bindAPI :: Enum -> IO Boolean
+
+foreign import ccall unsafe "eglCreateContext"
+  createContext :: Display -> Config -> Context -> Ptr EGLint -> IO Context

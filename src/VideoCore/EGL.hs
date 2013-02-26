@@ -5,6 +5,8 @@ import qualified VideoCore.Core.EGL as EGLC
 
 import Data.Array.Storable
 
+type ClientVersion = EGLC.EGLint
+
 getConfigs :: EGLC.Display -> EGLC.EGLint -> IO (EGLC.Boolean, EGLC.Config, EGLC.EGLint)
 getConfigs display count = do
     case count of
@@ -41,3 +43,8 @@ chooseConfig disp attrs = do
                 configR <- peek configP
                 countR <- peek countP
                 return (r, configR, countR)
+
+createContext :: EGLC.Display -> EGLC.Config -> EGLC.Context -> ClientVersion -> IO EGLC.Context
+createContext d cfg ctx version =
+    withArray [ EGLC.contextClientVersion, version, EGLC.none ] $ \attrs ->
+        EGLC.createContext d cfg ctx attrs
