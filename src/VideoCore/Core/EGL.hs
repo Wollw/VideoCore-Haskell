@@ -3,6 +3,7 @@ module VideoCore.Core.EGL where
 
 import Foreign
 import Foreign.C
+import Prelude hiding (Enum)
 
 type NativeDisplayType = Ptr ()
 
@@ -103,6 +104,9 @@ unknown = -1 :: CInt
 -- QueryContext attributes --
 contextClientVersion = 0x3098 :: EGLint
 
+--BindAPI/QueryAPI targets-- TODO Incomplete
+openGLESAPI = 0x30A0 :: Enum
+
 ----
 
 foreign import ccall unsafe "eglGetDisplay"
@@ -119,3 +123,6 @@ foreign import ccall unsafe "eglGetConfigAttrib"
 
 foreign import ccall unsafe "eglChooseConfig"
   chooseConfig :: Display -> Ptr EGLint -> Ptr Config -> EGLint -> Ptr EGLint -> IO Boolean
+
+foreign import ccall unsafe "eglBindAPI"
+  bindAPI :: Enum -> IO Boolean
