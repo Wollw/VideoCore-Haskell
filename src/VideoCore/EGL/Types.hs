@@ -24,8 +24,8 @@ version1_3 = CUInt 1
 version1_4 = CUInt 1
 
 -- EGL Aliases --
-false = Boolean 0
-true  = Boolean 1
+false = CUInt 0
+true  = CUInt 1
 
 -- Out-of-band handle values --
 defaultDisplay :: NativeDisplayType 

@@ -1,12 +1,14 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
 module VideoCore.Interface.VMCSHost.Dispmanx.Types where
 
+import Foreign.C
+
 version = CUInt 1
 
 -- Opaque Handles --
 type DisplayHandle  = CUInt
 type UpdateHandle   = CUInt
-type ElementHandle  = CUint
+type ElementHandle  = CUInt
 type ResourceHandle = CUInt
 
 type Protection = CUInt
@@ -23,22 +25,22 @@ idHDMI    = CUInt 2
 idSDTV    = CUInt 3
 
 -- Return codes. Nonzero ones indicate failure. --
-type Status = CUInt
-success = Status 0
-invalid = Status -1
+type Status = CInt
+success = CInt 0
+invalid = CInt (-1)
 
 type Transform = CUInt
-noRotate  = Transform 0
-rotate90  = Transform 1
-rotate180 = Transform 2
-rotate270 = Transform 3
-flipHriz  = Transform 65536
-flipVert  = Transform 131072
+noRotate  = CUInt 0
+rotate90  = CUInt 1
+rotate180 = CUInt 2
+rotate270 = CUInt 3
+flipHriz  = CUInt 65536
+flipVert  = CUInt 131072
 
-type FlagsAlpha = CUint
-flagsAlphaFromSource      = FlagsAlpha 0
-flagsAlphaFixedAllPixels  = FlagsAlpha 1
-flagsAlphaFixedNonZero    = FlagsAlpha 2
-flagsAlphaFixedExceed0X07 = FlagsAlpha 3
-flagsAlphaPreMult         = FlagsAlpha 65536
-flagsAlphaMix             = FlagsAlpha 131072
+type FlagsAlpha = CUInt
+flagsAlphaFromSource      = CUInt 0
+flagsAlphaFixedAllPixels  = CUInt 1
+flagsAlphaFixedNonZero    = CUInt 2
+flagsAlphaFixedExceed0X07 = CUInt 3
+flagsAlphaPreMult         = CUInt 65536
+flagsAlphaMix             = CUInt 131072
