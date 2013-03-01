@@ -134,3 +134,6 @@ foreign import ccall unsafe "eglCreateContext"
 
 foreign import ccall unsafe "eglCreateWindowSurface"
   createWindowSurface :: Display -> Config -> Ptr DispmanxWindow -> Ptr EGLint -> IO Surface
+
+foreign import ccall unsafe "eglMakeCurrent"
+  makeCurrent :: Display -> Surface -> Surface -> Context -> IO Boolean
