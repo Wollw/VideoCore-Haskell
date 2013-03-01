@@ -5,6 +5,8 @@ import Foreign
 import Foreign.C
 import Prelude hiding (Enum)
 
+import VideoCore.Core.EGL.Platform
+
 type NativeDisplayType = Ptr ()
 
 type EGLint = CInt
@@ -129,3 +131,6 @@ foreign import ccall unsafe "eglBindAPI"
 
 foreign import ccall unsafe "eglCreateContext"
   createContext :: Display -> Config -> Context -> Ptr EGLint -> IO Context
+
+foreign import ccall unsafe "eglCreateWindowSurface"
+  createWindowSurface :: Display -> Config -> Ptr DispmanxWindow -> Ptr EGLint -> IO Surface

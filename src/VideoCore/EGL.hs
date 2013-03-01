@@ -2,7 +2,7 @@ module VideoCore.EGL where
 
 import Foreign
 import qualified VideoCore.Core.EGL as EGLC
-
+import qualified VideoCore.Core.EGL.Platform as EGLCP
 import Data.Array.Storable
 
 type ClientVersion = EGLC.EGLint
@@ -48,3 +48,13 @@ createContext :: EGLC.Display -> EGLC.Config -> EGLC.Context -> ClientVersion ->
 createContext d cfg ctx version =
     withArray [ EGLC.contextClientVersion, version, EGLC.none ] $ \attrs ->
         EGLC.createContext d cfg ctx attrs
+
+
+createWindowSurface :: EGLC.Display -> EGLC.Config -> EGLCP.DispmanxWindow -> [EGLC.EGLint] -> IO EGLC.Surface
+createWindowSurface d cfg w attrs =
+    with w $ \windowP -> do
+        r <- case null attrs of
+            True -> EGLC.createWindowSurface d cfg windowP nullPtr
+            False -> withArray attrs $ \attrsP ->
+                EGLC.createWindowSurface d cfg windowP attrsP
+        return r

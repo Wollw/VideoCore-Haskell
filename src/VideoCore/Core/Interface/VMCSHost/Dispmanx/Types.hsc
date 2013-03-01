@@ -56,22 +56,10 @@ flagsAlphaFixedExceed0X07 = CUInt 3
 flagsAlphaPreMult         = CUInt 65536
 flagsAlphaMix             = CUInt 131072
 
-data ClampKeys = ClampKeysYUV
-    { clampKeysYYUpper :: CUChar
-    , clampKeysYYLower :: CUChar
-    , clampKeysCRUpper :: CUChar
-    , clampKeysCRLower :: CUChar
-    , clampKeysCBUpper :: CUChar
-    , clampKeysCBLower :: CUChar
-    }
-    | ClampKeysRGB
-    { clampKeysRUpper :: CUChar
-    , clampKeysRLower :: CUChar
-    , clampKeysGUpper :: CUChar
-    , clampKeysGLower :: CUChar
-    , clampKeysBUpper :: CUChar
-    , clampKeysBLower :: CUChar
-    } deriving (Show)
+-- DUMMY TYPE
+data Alpha = Alpha
+
+data ClampKeys = ClampKeys CUChar CUChar CUChar CUChar CUChar CUChar deriving (Show)
 
 instance Storable ClampKeys where
     alignment _ = #{alignment DISPMANX_CLAMP_KEYS_T}
@@ -83,8 +71,8 @@ instance Storable ClampKeys where
         gL <- #{peek DISPMANX_CLAMP_KEYS_T, rgb.green_lower} ptr
         bU <- #{peek DISPMANX_CLAMP_KEYS_T, rgb.blue_upper} ptr
         bL <- #{peek DISPMANX_CLAMP_KEYS_T, rgb.blue_lower} ptr
-        return (ClampKeysRGB rU rL gU gL bU bL)
-    poke ptr (ClampKeysRGB rU rL gU gL bU bL) = do
+        return (ClampKeys rU rL gU gL bU bL)
+    poke ptr (ClampKeys rU rL gU gL bU bL) = do
         #{poke DISPMANX_CLAMP_KEYS_T, rgb.red_upper} ptr rU
         #{poke DISPMANX_CLAMP_KEYS_T, rgb.red_lower} ptr rL
         #{poke DISPMANX_CLAMP_KEYS_T, rgb.green_upper} ptr gU
