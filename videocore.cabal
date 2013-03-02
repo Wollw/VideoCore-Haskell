@@ -22,6 +22,7 @@ library
                         VideoCore.Core.Interface.VCTypes.ImageTypes,
                         VideoCore.Interface.VMCSHost.Dispmanx
                         VideoCore.Core.EGL.Platform
+                        VideoCore.Core.GLES2 VideoCore.GLES2
   include-dirs:        /opt/vc/include, /opt/vc/include/interface/vmcs_host/linux, /opt/vc/include/interface/vcos/pthreads
   extra-lib-dirs:      /opt/vc/lib
   extra-libraries:     bcm_host, EGL, GLESv2
