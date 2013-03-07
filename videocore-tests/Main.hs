@@ -49,12 +49,13 @@ main = do
 
     vPosition <- GL.getAttribLocation shader "vPosition"
     checkGL
+    GLCore.enableVertexAttribArray (read . show $ vPosition)
+    checkGL
     uColor <- GL.getUniformLocation shader "uColor"
     checkGL
     
-    print shader
-    print vPosition
-    print uColor
+    GLCore.clearColor 0.5 0.5 0.5 1.0
+    checkGL
     
     VC.bcmHostDeinit
 
