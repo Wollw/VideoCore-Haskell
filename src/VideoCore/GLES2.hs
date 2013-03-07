@@ -20,3 +20,8 @@ getUniformLocation :: GLCore.GLuint -> String -> IO GLCore.GLint
 getUniformLocation program uniform = do
     uniformCStr <- newCString uniform
     GLCore.getUniformLocation program uniformCStr
+
+genBuffer :: IO GLCore.GLuint
+genBuffer = alloca $ \bufferP -> do
+    GLCore.genBuffers 1 bufferP
+    peek bufferP

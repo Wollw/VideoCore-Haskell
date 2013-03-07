@@ -15,6 +15,9 @@ type GLfloat = CFloat
 fragmentShader = 0x8B30 :: GLenum
 vertexShader = 0x8B31 :: GLenum
 
+-- Buffer Objects --
+arrayBuffer = 0x8892 :: GLenum
+
 foreign import ccall unsafe "glGetError"
   getError :: IO GLenum
 
@@ -50,3 +53,9 @@ foreign import ccall unsafe "glDisableVertexAttribArray"
 
 foreign import ccall unsafe "glClearColor"
   clearColor :: GLfloat -> GLfloat -> GLfloat -> GLfloat -> IO ()
+
+foreign import ccall unsafe "glGenBuffers"
+  genBuffers :: GLsizei -> Ptr GLuint -> IO ()
+
+foreign import ccall unsafe "glBindBuffer"
+  bindBuffer :: GLenum -> GLuint -> IO ()

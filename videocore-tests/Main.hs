@@ -56,6 +56,9 @@ main = do
     
     GLCore.clearColor 0.5 0.5 0.5 1.0
     checkGL
+
+    vertexBuffer <- GL.genBuffer
+    GLCore.bindBuffer GLCore.arrayBuffer vertexBuffer
     
     VC.bcmHostDeinit
 
