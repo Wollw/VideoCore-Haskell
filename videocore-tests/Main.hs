@@ -57,10 +57,21 @@ main = do
     GLCore.clearColor 0.5 0.5 0.5 1.0
     checkGL
 
+    GLCore.viewport 0 0 (read . show . eglWidth $ egl) (read . show . eglHeight $ egl)
+    checkGL
+
     vertexBuffer <- GL.genBuffer
     GLCore.bindBuffer GLCore.arrayBuffer vertexBuffer
+    GL.bufferData GLCore.arrayBuffer vertexData GLCore.staticDraw
+    GLCore.bindBuffer GLCore.arrayBuffer 0
     
     VC.bcmHostDeinit
+  where
+    vertexData = [ -0.5, -0.5, -1.0
+                 ,  0.0,  0.5, -1.0
+                 ,  0.5, -0.5, -1.0
+                 ]
+                
 
 eglSetup :: IO EGLState
 eglSetup = do

@@ -10,6 +10,7 @@ type GLint = CInt
 type GLchar = CChar
 type GLenum = CUInt
 type GLfloat = CFloat
+type GLsizeiptr = CLong
 
 -- Shaders --
 fragmentShader = 0x8B30 :: GLenum
@@ -17,6 +18,8 @@ vertexShader = 0x8B31 :: GLenum
 
 -- Buffer Objects --
 arrayBuffer = 0x8892 :: GLenum
+
+staticDraw = 0x88E4 :: GLenum
 
 foreign import ccall unsafe "glGetError"
   getError :: IO GLenum
@@ -59,3 +62,10 @@ foreign import ccall unsafe "glGenBuffers"
 
 foreign import ccall unsafe "glBindBuffer"
   bindBuffer :: GLenum -> GLuint -> IO ()
+
+foreign import ccall unsafe "glBufferData"
+  bufferData :: GLenum -> GLsizeiptr -> Ptr () -> GLenum -> IO ()
+
+foreign import ccall unsafe "glViewport"
+  viewport :: GLint -> GLint -> GLsizei -> GLsizei -> IO ()
+

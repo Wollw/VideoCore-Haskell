@@ -25,3 +25,7 @@ genBuffer :: IO GLCore.GLuint
 genBuffer = alloca $ \bufferP -> do
     GLCore.genBuffers 1 bufferP
     peek bufferP
+
+bufferData :: GLCore.GLenum -> [GLCore.GLfloat] -> GLCore.GLenum -> IO ()
+bufferData target bData usage = withArray bData $ \dataP ->
+    GLCore.bufferData target (read . show $ (length bData) * 4) (castPtr dataP) usage
