@@ -137,3 +137,6 @@ foreign import ccall unsafe "eglCreateWindowSurface"
 
 foreign import ccall unsafe "eglMakeCurrent"
   makeCurrent :: Display -> Surface -> Surface -> Context -> IO Boolean
+
+foreign import ccall unsafe "eglSwapBuffers"
+  swapBuffers :: Display -> Surface -> IO Boolean

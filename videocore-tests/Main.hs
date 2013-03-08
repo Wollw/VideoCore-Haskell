@@ -57,16 +57,30 @@ main = do
     GLCore.clearColor 0.5 0.5 0.5 1.0
     checkGL
 
+    -- Configure viewport --
     GLCore.viewport 0 0 (read . show . eglWidth $ egl) (read . show . eglHeight $ egl)
     checkGL
 
+    -- Upload vertex data --
     vertexBuffer <- GL.genBuffer
+    checkGL
     GLCore.bindBuffer GLCore.arrayBuffer vertexBuffer
+    checkGL
     GL.bufferData GLCore.arrayBuffer vertexData GLCore.staticDraw
+    checkGL
     GLCore.bindBuffer GLCore.arrayBuffer 0
+    checkGL
+
+    loop egl
     
     VC.bcmHostDeinit
   where
+    loop egl = do
+        GLCore.clear GLCore.colorBufferBit
+        checkGL
+        EGLC.swapBuffers (eglDisplay egl) (eglSurface egl)
+        checkGL
+        loop egl
     vertexData = [ -0.5, -0.5, -1.0
                  ,  0.0,  0.5, -1.0
                  ,  0.5, -0.5, -1.0
@@ -78,27 +92,31 @@ eglSetup = do
     -- Initialize the EGL display --
     display <- EGLC.getDisplay EGLC.defaultDisplay
     when (display == EGLC.noDisplay) $ fail 1 "No display found."
+    checkGL
     result <- EGLC.initialize display nullPtr nullPtr
     when (result == EGLC.false) $ fail 1 "Could not initialize display."
+    checkGL
 
     -- Get the EGL configs --
     (result, _, count) <- EGL.getConfigs display 0
     when (result == EGLC.false) $ fail 1 "Could not get config count."
+    checkGL
     (result, configs, count) <- EGL.getConfigs display count
     when (result == EGLC.false) $ fail 1 "Could not get configs."
+    checkGL
 
     -- Configure the EGL attributes --
     let n = 0
     (result, redSize) <- EGL.getConfigAttrib display (plusPtr configs n) EGLC.redSize
-    when (result == EGLC.false) $ fail 1 "Count not get attribute value."
+    when (result == EGLC.false) $ fail 1 "Could not get attribute value."
     (result, greenSize) <- EGL.getConfigAttrib display (plusPtr configs n) EGLC.greenSize
-    when (result == EGLC.false) $ fail 1 "Count not get attribute value."
+    when (result == EGLC.false) $ fail 1 "Could not get attribute value."
     (result, blueSize) <- EGL.getConfigAttrib display (plusPtr configs n) EGLC.blueSize
-    when (result == EGLC.false) $ fail 1 "Count not get attribute value."
+    when (result == EGLC.false) $ fail 1 "Could not get attribute value."
     (result, alphaSize) <- EGL.getConfigAttrib display (plusPtr configs n) EGLC.alphaSize
-    when (result == EGLC.false) $ fail 1 "Count not get attribute value."
+    when (result == EGLC.false) $ fail 1 "Could not get attribute value."
     (result, surfaceType) <- EGL.getConfigAttrib display (plusPtr configs n) EGLC.surfaceType
-    when (result == EGLC.false) $ fail 1 "Count not get attribute value."
+    when (result == EGLC.false) $ fail 1 "Could not get attribute value."
     (result, config, _) <- EGL.chooseConfig display
         [ EGLC.redSize, redSize
         , EGLC.greenSize, greenSize
@@ -107,12 +125,15 @@ eglSetup = do
         , EGLC.surfaceType, surfaceType
         , EGLC.none ]
     when (result == EGLC.false) $ fail 1 "Could not get config."
+    checkGL
     result <- EGLC.bindAPI EGLC.openGLESAPI
+    checkGL
     when (result == EGLC.false) $ fail 1 "Could not bind API."
 
     -- Create the EGL rendering context --
     context <- EGL.createContext display config EGLC.noContext 2
     when (context == EGLC.noContext) $ fail 1 "Count not create context."
+    checkGL
 
     -- Create the EGL window surface --
     (result, width, height) <- VC.graphicsGetDisplaySize 0 -- LCD is 0
@@ -136,12 +157,13 @@ eglSetup = do
         dispmanxUpdate dispmanxDisplay
         0 dstRect 0 srcRect DispmanxTypes.protectionNone
         nullPtr nullPtr 0
-
     let nativeWindow = EGLCP.DispmanxWindow {
           EGLCP.dmxWinElem = dispmanxElement
         , EGLCP.dmxWinWidth = width
         , EGLCP.dmxWinHeight = height
         }
+    DispmanxCore.updateSubmitSync dispmanxUpdate
+    checkGL
 
     surface <- EGL.createWindowSurface display config nativeWindow []
     when (surface == EGLC.noSurface) $ fail 1 "Failed to create EGL surface."

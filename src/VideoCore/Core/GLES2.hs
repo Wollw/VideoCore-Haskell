@@ -12,6 +12,9 @@ type GLenum = CUInt
 type GLfloat = CFloat
 type GLsizeiptr = CLong
 
+-- ClearBufferMask --
+colorBufferBit = 0x00004000 :: GLenum
+
 -- Shaders --
 fragmentShader = 0x8B30 :: GLenum
 vertexShader = 0x8B31 :: GLenum
@@ -69,3 +72,5 @@ foreign import ccall unsafe "glBufferData"
 foreign import ccall unsafe "glViewport"
   viewport :: GLint -> GLint -> GLsizei -> GLsizei -> IO ()
 
+foreign import ccall unsafe "glClear"
+  clear :: GLenum -> IO ()

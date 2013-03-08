@@ -15,3 +15,6 @@ foreign import ccall unsafe "vc_dispmanx_update_start"
 
 foreign import ccall unsafe "vc_dispmanx_element_add"
   elementAdd :: UpdateHandle -> DisplayHandle -> CInt -> Ptr VCRect -> ResourceHandle -> Ptr VCRect -> Protection -> Ptr Alpha -> Ptr Clamp -> Transform -> IO ElementHandle
+
+foreign import ccall unsafe "vc_dispmanx_update_submit_sync"
+  updateSubmitSync :: UpdateHandle -> IO CInt
