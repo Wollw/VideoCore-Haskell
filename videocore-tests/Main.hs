@@ -181,11 +181,11 @@ createShaderProgram = do
     fragShader <- GLCore.createShader GLCore.fragmentShader
     readFile "shader.vert" >>= GL.shaderSource vertShader
     readFile "shader.frag" >>= GL.shaderSource fragShader
-    mapM_ GLCore.compileShader [vertShader, fragShader]
+    mapM GLCore.compileShader [vertShader, fragShader]
 
     -- Create program --
     program <- GLCore.createProgram
-    mapM_ (GLCore.attachShader program) [vertShader, fragShader]
+    mapM (GLCore.attachShader program) [vertShader, fragShader]
     GLCore.linkProgram program
 
     return program
