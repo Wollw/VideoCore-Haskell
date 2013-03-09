@@ -28,4 +28,4 @@ genBuffer = alloca $ \bufferP -> do
 
 bufferData :: GLCore.GLenum -> [GLCore.GLfloat] -> GLCore.GLenum -> IO ()
 bufferData target bData usage = withArray bData $ \dataP ->
-    GLCore.bufferData target (read . show $ (length bData) * 4) (castPtr dataP) usage
+    GLCore.bufferData target (fromIntegral (length bData) * 4) (castPtr dataP) usage

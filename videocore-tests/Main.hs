@@ -49,7 +49,7 @@ main = do
 
     vPosition <- GL.getAttribLocation shader "vPosition"
     checkGL
-    GLCore.enableVertexAttribArray (read . show $ vPosition)
+    GLCore.enableVertexAttribArray (fromIntegral vPosition)
     checkGL
     uColor <- GL.getUniformLocation shader "uColor"
     checkGL
@@ -58,7 +58,7 @@ main = do
     checkGL
 
     -- Configure viewport --
-    GLCore.viewport 0 0 (read . show . eglWidth $ egl) (read . show . eglHeight $ egl)
+    GLCore.viewport 0 0 (fromIntegral . eglWidth $ egl) (fromIntegral . eglHeight $ egl)
     checkGL
 
     -- Upload vertex data --
@@ -142,14 +142,14 @@ eglSetup = do
     let dstRect = VCTI.VCRect {
           VCTI.vcRectX = 0
         , VCTI.vcRectY = 0
-        , VCTI.vcRectWidth  = (read . show) width
-        , VCTI.vcRectHeight = (read . show) height
+        , VCTI.vcRectWidth  = fromIntegral width
+        , VCTI.vcRectHeight = fromIntegral height
         }
     let srcRect = VCTI.VCRect {
           VCTI.vcRectX = 0
         , VCTI.vcRectY = 0
-        , VCTI.vcRectWidth  = (read . show) width `shift` 16
-        , VCTI.vcRectHeight = (read . show) height `shift` 16
+        , VCTI.vcRectWidth  = fromIntegral width `shift` 16
+        , VCTI.vcRectHeight = fromIntegral height `shift` 16
         }
     dispmanxDisplay <- DispmanxCore.displayOpen 0 -- LCD is 0
     dispmanxUpdate <- DispmanxCore.updateStart 0
