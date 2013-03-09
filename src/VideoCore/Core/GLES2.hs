@@ -11,6 +11,24 @@ type GLchar = CChar
 type GLenum = CUInt
 type GLfloat = CFloat
 type GLsizeiptr = CLong
+type GLboolean = CUChar
+type GLvoid = ()
+
+-- DataType --
+float = 0x1406 :: GLenum
+
+-- Boolean --
+true  = 1 :: GLboolean
+false = 0 :: GLboolean
+
+-- BeginMode --
+points        = 0x0 :: GLenum
+lines         = 0x1 :: GLenum
+lineLoop      = 0x2 :: GLenum
+lineStrip     = 0x3 :: GLenum
+triangles     = 0x4 :: GLenum
+triangleStrip = 0x5 :: GLenum
+triangleFan   = 0x6 :: GLenum
 
 -- ClearBufferMask --
 colorBufferBit = 0x00004000 :: GLenum
@@ -74,3 +92,18 @@ foreign import ccall unsafe "glViewport"
 
 foreign import ccall unsafe "glClear"
   clear :: GLenum -> IO ()
+
+foreign import ccall unsafe "glUseProgram"
+  useProgram :: GLuint -> IO ()
+
+foreign import ccall unsafe "glUniform4f"
+  uniform4f :: GLint -> GLfloat -> GLfloat -> GLfloat -> GLfloat -> IO ()
+
+foreign import ccall unsafe "glVertexAttribPointer"
+  vertexAttribPointer :: GLuint -> GLint -> GLenum -> GLboolean -> GLsizei -> Ptr GLvoid -> IO ()
+
+foreign import ccall unsafe "glDrawArrays"
+  drawArrays :: GLenum -> GLint -> GLsizei -> IO ()
+
+foreign import ccall unsafe "glFlush"
+  flush :: IO ()

@@ -47,11 +47,11 @@ main = do
     shader <- createShaderProgram
     checkGL
 
-    vPosition <- GL.getAttribLocation shader "vPosition"
+    vPosition <- fmap (fromIntegral) $ GL.getAttribLocation shader "vPosition"
     checkGL
     GLCore.enableVertexAttribArray (fromIntegral vPosition)
     checkGL
-    uColor <- GL.getUniformLocation shader "uColor"
+    uColor <- fmap (fromIntegral) $ GL.getUniformLocation shader "uColor"
     checkGL
     
     GLCore.clearColor 0.5 0.5 0.5 1.0
@@ -71,16 +71,21 @@ main = do
     GLCore.bindBuffer GLCore.arrayBuffer 0
     checkGL
 
-    loop egl
+    let loop = do
+        GLCore.clear GLCore.colorBufferBit
+        GLCore.useProgram shader
+        GLCore.uniform4f uColor 1.0 0.0 0.0 1.0
+        GLCore.bindBuffer GLCore.arrayBuffer vertexBuffer
+        GLCore.vertexAttribPointer vPosition 3 GLCore.float GLCore.false 0 nullPtr
+        GLCore.drawArrays GLCore.triangles 0 3
+        GLCore.bindBuffer GLCore.arrayBuffer 0
+        GLCore.flush
+        EGLC.swapBuffers (eglDisplay egl) (eglSurface egl)
+        loop
+    loop
     
     VC.bcmHostDeinit
   where
-    loop egl = do
-        GLCore.clear GLCore.colorBufferBit
-        checkGL
-        EGLC.swapBuffers (eglDisplay egl) (eglSurface egl)
-        checkGL
-        loop egl
     vertexData = [ -0.5, -0.5, -1.0
                  ,  0.0,  0.5, -1.0
                  ,  0.5, -0.5, -1.0
