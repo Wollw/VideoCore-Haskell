@@ -54,7 +54,7 @@ main = do
     uColor <- fmap (fromIntegral) $ GL.getUniformLocation shader "uColor"
     checkGL
     
-    GLCore.clearColor 0.5 0.5 0.5 1.0
+    GLCore.clearColor 0.5 0.5 1.0 1.0
     checkGL
 
     -- Configure viewport --
