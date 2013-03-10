@@ -1,5 +1,5 @@
-{-# LANGUAGE ForeignFunctionInterface #-}
-module VideoCore.Core.GLES2 where
+{-# LANGUAGE ForeignFunctionInterface, CPP #-}
+module VideoCore.Raw.GLES2 where
 
 import Foreign
 import Foreign.C

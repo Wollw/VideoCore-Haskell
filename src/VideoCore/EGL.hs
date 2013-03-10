@@ -1,8 +1,8 @@
 module VideoCore.EGL where
 
 import Foreign
-import qualified VideoCore.Core.EGL as EGLC
-import qualified VideoCore.Core.EGL.Platform as EGLCP
+import qualified VideoCore.Raw.EGL as EGLC
+import qualified VideoCore.Raw.EGL.Platform as EGLCP
 import Data.Array.Storable
 
 type ClientVersion = EGLC.EGLint

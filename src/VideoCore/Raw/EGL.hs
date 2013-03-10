@@ -1,11 +1,11 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
-module VideoCore.Core.EGL where
+module VideoCore.Raw.EGL where
 
 import Foreign
 import Foreign.C
 import Prelude hiding (Enum)
 
-import VideoCore.Core.EGL.Platform
+import VideoCore.Raw.EGL.Platform
 
 type NativeDisplayType = Ptr ()
 

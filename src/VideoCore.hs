@@ -1,7 +1,7 @@
 module VideoCore where
 
 import qualified VideoCore.Raw as VCRaw
-import qualified VideoCore.Core.EGL as EGL
+import qualified VideoCore.Raw.EGL as EGL
 
 import Foreign
 import Foreign.C

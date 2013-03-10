@@ -1,6 +1,6 @@
 module VideoCore.GLES2 where
 
-import qualified VideoCore.Core.GLES2 as GLCore
+import qualified VideoCore.Raw.GLES2 as GLCore
 
 import Foreign
 import Foreign.C

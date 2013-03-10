@@ -9,13 +9,13 @@ import qualified System.Hardware.GPIO.Pin as P
 
 import qualified VideoCore as VC
 import qualified VideoCore.EGL as EGL
-import qualified VideoCore.Core.EGL as EGLC
-import qualified VideoCore.Core.EGL.Platform as EGLCP
-import qualified VideoCore.Core.Interface.VCTypes.ImageTypes as VCTI
-import qualified VideoCore.Core.Interface.VMCSHost.Dispmanx as DispmanxCore
-import qualified VideoCore.Core.Interface.VMCSHost.Dispmanx.Types as DispmanxTypes
+import qualified VideoCore.Raw.EGL as EGLC
+import qualified VideoCore.Raw.EGL.Platform as EGLCP
+import qualified VideoCore.Raw.Interface.VCTypes.ImageTypes as VCTI
+import qualified VideoCore.Raw.Interface.VMCSHost.Dispmanx as DispmanxRaw
+import qualified VideoCore.Raw.Interface.VMCSHost.Dispmanx.Types as DispmanxTypes
 import qualified VideoCore.Interface.VMCSHost.Dispmanx as Dispmanx
-import qualified VideoCore.Core.GLES2 as GLCore
+import qualified VideoCore.Raw.GLES2 as GLCore
 import qualified VideoCore.GLES2 as GL
 --import qualified VideoCore.EGL.Macros as EGLM
 import Foreign
@@ -156,8 +156,8 @@ eglSetup = do
         , VCTI.vcRectWidth  = fromIntegral width `shift` 16
         , VCTI.vcRectHeight = fromIntegral height `shift` 16
         }
-    dispmanxDisplay <- DispmanxCore.displayOpen 0 -- LCD is 0
-    dispmanxUpdate <- DispmanxCore.updateStart 0
+    dispmanxDisplay <- DispmanxRaw.vc_dispmanx_display_open 0 -- LCD is 0
+    dispmanxUpdate <- DispmanxRaw.vc_dispmanx_update_start 0
     dispmanxElement <- Dispmanx.elementAdd
         dispmanxUpdate dispmanxDisplay
         0 dstRect 0 srcRect DispmanxTypes.protectionNone
@@ -167,7 +167,7 @@ eglSetup = do
         , EGLCP.dmxWinWidth = width
         , EGLCP.dmxWinHeight = height
         }
-    DispmanxCore.updateSubmitSync dispmanxUpdate
+    DispmanxRaw.vc_dispmanx_update_submit_sync dispmanxUpdate
     checkGL
 
     surface <- EGL.createWindowSurface display config nativeWindow []

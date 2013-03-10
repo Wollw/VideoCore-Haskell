@@ -1,9 +1,9 @@
-module VideoCore.Core.EGL.Platform where
+module VideoCore.Raw.EGL.Platform where
 
 import Foreign
 import Foreign.C
 
-import qualified VideoCore.Core.Interface.VMCSHost.Dispmanx.Types as DMXTypes
+import qualified VideoCore.Raw.Interface.VMCSHost.Dispmanx.Types as DMXTypes
 
 #include <EGL/eglplatform.h>
 

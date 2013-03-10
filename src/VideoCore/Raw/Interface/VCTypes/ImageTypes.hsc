@@ -1,4 +1,4 @@
-module VideoCore.Core.Interface.VCTypes.ImageTypes where
+module VideoCore.Raw.Interface.VCTypes.ImageTypes where
 
 import Foreign
 import Foreign.C
