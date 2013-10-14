@@ -1,7 +1,7 @@
 module Main where
 
 import Prelude hiding (fail)
-import Control.Monad (when)
+import Control.Monad (when, forever)
 import System.Exit
 import Numeric (showHex)
 
@@ -71,7 +71,7 @@ main = do
     GLCore.bindBuffer GLCore.arrayBuffer 0
     checkGL
 
-    let loop = do
+    forever $ do
         GLCore.clear GLCore.colorBufferBit
         GLCore.useProgram shader
         GLCore.uniform4f uColor 1.0 0.0 0.0 1.0
@@ -81,8 +81,6 @@ main = do
         GLCore.bindBuffer GLCore.arrayBuffer 0
         GLCore.flush
         EGLC.swapBuffers (eglDisplay egl) (eglSurface egl)
-        loop
-    loop
     
     VC.bcmHostDeinit
   where
