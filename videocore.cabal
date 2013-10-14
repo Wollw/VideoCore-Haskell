@@ -28,3 +28,8 @@ library
   extra-libraries:     bcm_host, EGL, GLESv2
   build-depends:       base ==4.5.*, array
   hs-source-dirs:      src
+
+executable VideocoreExample
+  hs-source-dirs:   videocore-example
+  main-is:          Main.hs
+  build-depends:    base ==4.5.*, system-gpio, videocore, array
